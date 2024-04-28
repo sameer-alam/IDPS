@@ -67,9 +67,19 @@ public class TrafficMonitor {
         System.out.println();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.err.println("Usage: java TrafficMonitor <port>");
+            return;
+        }
 
-        TrafficMonitor monitor = new TrafficMonitor(9090);
-        monitor.startMonitoring();
+        int port = Integer.parseInt(args[0]);
+
+        try {
+            TrafficMonitor monitor = new TrafficMonitor(port);
+            monitor.startMonitoring();
+        } catch (IOException e) {
+            System.err.println("Error starting traffic monitor: " + e.getMessage());
+        }
     }
 }
